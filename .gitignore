@@ -1,2 +1,7 @@
-.venv
-test_results
+.venv/
+test_results/
+Selenium_training.code-workspace
+.vscode/
+__pycache__/
+.pytest_cache/
+.flake8

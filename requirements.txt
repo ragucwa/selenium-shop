@@ -1,0 +1,6 @@
+selenium
+pytest
+flake8
+black
+pandas
+openpyxl
