@@ -19,7 +19,7 @@ pipeline {
 
         stage('Run tests') {
             steps {
-                bat 'pytest ./tests'
+                bat 'pytest ./tests --junitxml=test_results/test-results.xml' 
             }
         }
 
