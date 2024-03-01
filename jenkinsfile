@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Check Python and Pip version') {
+            steps {
+                sh 'python --version'
+                sh 'pip --version'
+            }
+        }
         stage('Install dependencies') {
             steps {
                 sh 'pip install -r requirements.txt'
