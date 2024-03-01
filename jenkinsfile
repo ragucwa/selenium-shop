@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        automation_password = credentials('automation_password')
+    }
 
     stages {
         stage('Check Python and Pip version') {
