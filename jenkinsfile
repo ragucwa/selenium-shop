@@ -4,19 +4,19 @@ pipeline {
     stages {
         stage('Check Python and Pip version') {
             steps {
-                sh 'python --version'
-                sh 'pip --version'
+                bat 'python --version'
+                bat 'pip --version'
             }
         }
         stage('Install dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Run tests') {
             steps {
-                sh 'pytest ./tests'
+                bat 'pytest ./tests'
             }
         }
 
