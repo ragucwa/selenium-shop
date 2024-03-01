@@ -39,11 +39,11 @@ def login_before_tests(driver):
     login_page.log_in("standard_user", PASSWORD)
 
 
-@pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):
-    outcome = yield
-    report = outcome.get_result()
-    if report.failed:
-        driver = item.funcargs["driver"]
-        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        driver.save_screenshot(f"test_results/{item.name}_{timestamp}_screenshot.png")
+# @pytest.hookimpl(tryfirst=True, hookwrapper=True)
+# def pytest_runtest_makereport(item, call):
+#     outcome = yield
+#     report = outcome.get_result()
+#     if report.failed:
+#         driver = item.funcargs["driver"]
+#         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+#         driver.save_screenshot(f"test_results/{item.name}_{timestamp}_screenshot.png")
