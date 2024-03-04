@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 import pytest
 from selenium import webdriver
 
@@ -46,4 +47,6 @@ def pytest_runtest_makereport(item, call):
     if report.failed:
         driver = item.funcargs["driver"]
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        driver.save_screenshot(f"{item.name}_{timestamp}_screenshot.png")
+        driver.save_screenshot(
+            f"{os.environ['WORKSPACE']}/{item.name}_{timestamp}_screenshot.png"
+        )
