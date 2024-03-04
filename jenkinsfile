@@ -32,9 +32,8 @@ pipeline {
     }
     post {
         always {
-            script {
-                currentBuild.result = currentBuild.result ?: 'SUCCESS'
-            }
+            archiveArtifacts artifacts: '**/test-results.xml'
+            junit "**/test-results.xml"
         }
     }
 }
