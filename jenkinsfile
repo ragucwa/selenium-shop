@@ -4,33 +4,28 @@ pipeline {
         automation_password = credentials('automation_password')
     }
 
-    parameters{
-        string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to build')
-        string(name: 'TEST_FOLDER', defaultValue: './tests', description: 'Folder to run tests')
-    }
-
-    stages{
+    stages {
+        stage('Check Python and Pip version') {
+            steps {
+                bat 'python --version'
+                bat 'pip --version'
+            }
+        }
         stage('Install dependencies') {
             steps {
-                withEnv(['PIP_CACHE_DIR=.pip_cache']) {
-                    description 'Installing Python dependencies from requirements.txt'
-                    bat "pip install -r requirements.txt"
-                }
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Run tests') {
             steps {
-                description "Running tests inside ${params.TEST_FOLDER} folder"
-                bat "pytest ${params.TEST_FOLDER} --junitxml=test_results/test-results.xml"
+                bat 'pytest ./tests --junitxml=test_results/test-results.xml' 
             }
         }
 
-        post{
-            always {
-                archiveArtifacts artifacts: '**/test-results.xml'
-                junit "**/test-results.xml"
-                cleanWs notPaths: ['.pip_cache']
+        stage('Publish results') {
+            steps {
+                junit '**/test-results.xml'
             }
         }
     }
