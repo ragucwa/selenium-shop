@@ -13,7 +13,6 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 withEnv(['PIP_CACHE_DIR=.pip_cache']) {
-                    description 'Installing Python dependencies from requirements.txt'
                     bat "pip install -r requirements.txt"
                 }
             }
@@ -21,7 +20,6 @@ pipeline {
 
         stage('Run tests') {
             steps {
-                description "Running tests inside ${params.TEST_FOLDER} folder"
                 bat "pytest ${params.TEST_FOLDER} --junitxml=test_results/test-results.xml"
             }
             post{
