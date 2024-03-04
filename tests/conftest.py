@@ -44,9 +44,6 @@ def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
     if report.failed:
-        print(
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-        )
         driver = item.funcargs["driver"]
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        driver.save_screenshot(f"test_results/{item.name}_{timestamp}_screenshot.png")
+        driver.save_screenshot(f"{item.name}_{timestamp}_screenshot.png")
