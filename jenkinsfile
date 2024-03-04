@@ -24,6 +24,13 @@ pipeline {
                 description "Running tests inside ${params.TEST_FOLDER} folder"
                 bat "pytest ${params.TEST_FOLDER} --junitxml=test_results/test-results.xml"
             }
+            post{
+                always {
+                    archiveArtifacts artifacts: '**/test-results.xml'
+                    junit "**/test-results.xml"
+                    cleanWs notPaths: ['.pip_cache']
+                }
+            }
         }
 
         post{
