@@ -22,12 +22,6 @@ pipeline {
             steps {
                 bat "pytest ${params.TEST_FOLDER} --junitxml=test_results/test-results.xml"
             }
-            post{
-                always {
-                    archiveArtifacts artifacts: '**/test-results.xml'
-                    junit "**/test-results.xml"
-                }
-            }
         }
     }
     post {
