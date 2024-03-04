@@ -17,7 +17,7 @@ def driver(request):
         driver_option = webdriver.ChromeOptions()
         driver_option.add_argument("--window-size=1920,1080")
         driver_option.add_argument("incognito")
-        driver_option.add_argument("--headless")
+        # driver_option.add_argument("--headless")
         driver_option.add_argument("--disable-extensions")
         driver = webdriver.Chrome(options=driver_option)
     elif browser == "firefox":
