@@ -31,6 +31,8 @@ def driver(request):
         raise Exception(f"Unsupported browser: {browser}")
     yield driver
     driver.quit()
+    if hasattr(request.node, "driver"):
+        del request.node.driver
 
 
 @pytest.fixture(autouse=True)
@@ -44,8 +46,8 @@ def login_before_tests(driver):
 def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
-    if report.failed:
-        driver = item.funcargs["driver"]
+    if report.failed and hasattr(item, "driver"):
+        driver = item.driver
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         driver.save_screenshot(
             f"{os.environ['WORKSPACE']}/{item.name}_{timestamp}_screenshot.png"
