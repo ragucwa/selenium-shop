@@ -1,5 +1,4 @@
 from datetime import datetime
-import os
 import pytest
 from selenium import webdriver
 
@@ -36,10 +35,11 @@ def driver(request):
 
 
 @pytest.fixture(autouse=True)
-def login_before_tests(driver):
+def login_before_tests(driver, request):
     login_page = LoginPage(driver)
     login_page.open_login_page()
     login_page.log_in("standard_user", PASSWORD)
+    request.node.driver = driver
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -49,6 +49,4 @@ def pytest_runtest_makereport(item, call):
     if report.failed and hasattr(item, "driver"):
         driver = item.driver
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        driver.save_screenshot(
-            f"{os.environ['WORKSPACE']}/{item.name}_{timestamp}_screenshot.png"
-        )
+        driver.save_screenshot(f"{item.name}_{timestamp}_screenshot.png")
