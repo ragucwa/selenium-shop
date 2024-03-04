@@ -28,7 +28,7 @@ pipeline {
         always {
             archiveArtifacts artifacts: '**/test-results.xml'
             junit "**/test-results.xml"
-            cleanWs notPaths: ['.pip_cache']
+            cleanWs()
         }
     }
 }
