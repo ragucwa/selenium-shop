@@ -20,7 +20,7 @@ pipeline {
 
         stage('Run tests') {
             steps {
-                bat "pytest ${params.TEST_FOLDER} --junitxml=test_results/test-results.xml --alluredir=./test_results"
+                bat "pytest ${params.TEST_FOLDER} --alluredir=./test_results"
             }
         }
     }
