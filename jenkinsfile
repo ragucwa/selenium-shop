@@ -26,6 +26,15 @@ pipeline {
     }
     post {
         always {
+            script{
+                allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'test_results']]
+                ])
+            }
             archiveArtifacts artifacts: '**/test-results.xml, **/test_results/*.png'
             junit "**/test-results.xml"
             cleanWs()
