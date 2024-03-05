@@ -79,6 +79,6 @@ class MainPage(BasePage):
                     self.item_description_by_name[1].format(item_name),
                 )
             )
-            if item_description == expected_items_descriptions[item_name]:
+            if item_description != expected_items_descriptions[item_name]:
                 return False
         return True
