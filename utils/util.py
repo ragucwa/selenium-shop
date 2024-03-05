@@ -1,4 +1,5 @@
 import re
+import allure
 import pandas as pd
 
 
@@ -15,6 +16,7 @@ def extract_price_from_text(text: str) -> str:
     return number
 
 
+@allure.step("Get Excel data")
 def get_excel_data(file_path: str) -> list:
     """
     Reads the data from the given Excel file.

@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -62,10 +63,12 @@ class MainPage(BasePage):
         else:
             raise ValueError(f"Sorting option {sorting} is not supported")
 
+    @allure.step("Verify that the correct items names are displayed")
     def are_correct_items_names_displayed(self, expected_items_names: list):
         actual_items_names = self.get_multiple_elements_text(self.item_title)
         return sorted(actual_items_names) == sorted(expected_items_names)
 
+    @allure.step("Verify that the correct items descriptions are displayed")
     def are_correct_items_descriptions_displayed(
         self, expected_items_descriptions: dict
     ):

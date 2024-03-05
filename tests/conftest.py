@@ -1,4 +1,5 @@
 from datetime import datetime
+import allure
 import pytest
 from selenium import webdriver
 
@@ -17,7 +18,7 @@ def driver(request):
         driver_option = webdriver.ChromeOptions()
         driver_option.add_argument("--window-size=1920,1080")
         driver_option.add_argument("incognito")
-        # driver_option.add_argument("--headless")
+        driver_option.add_argument("--headless")
         driver_option.add_argument("--disable-extensions")
         driver = webdriver.Chrome(options=driver_option)
     elif browser == "firefox":
@@ -30,8 +31,6 @@ def driver(request):
         raise Exception(f"Unsupported browser: {browser}")
     yield driver
     driver.quit()
-    if hasattr(request.node, "driver"):
-        del request.node.driver
 
 
 @pytest.fixture(autouse=True)
@@ -39,14 +38,20 @@ def login_before_tests(driver, request):
     login_page = LoginPage(driver)
     login_page.open_login_page()
     login_page.log_in("standard_user", PASSWORD)
-    request.node.driver = driver
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
-    if report.failed and hasattr(item, "driver"):
-        driver = item.driver
+    if report.failed:
+        driver = item.funcargs["driver"]
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        driver.save_screenshot(f"{item.name}_{timestamp}_screenshot.png")
+        screenshot_name = f"{item.name}_{timestamp}_screenshot.png"
+        driver.save_screenshot(f"test_results/{screenshot_name}")
+        with open(f"test_results/{screenshot_name}", "rb") as f:
+            allure.attach(
+                f.read(),
+                name=screenshot_name,
+                attachment_type=allure.attachment_type.PNG,
+            )
