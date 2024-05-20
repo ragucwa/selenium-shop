@@ -1,8 +1,9 @@
 import pytest
-from pages.login_page import LoginPage
 from pages.main_page import MainPage
 
 
+@pytest.mark.usefixtures("login_before_tests")
+@pytest.mark.sorting_items
 class TestSortingItems:
     @pytest.mark.parametrize(
         "sorting",
@@ -11,7 +12,7 @@ class TestSortingItems:
             "Name (Z to A)",
         ],
     )
-    def test_sorting_items_by_name(self, driver, login_before_tests, sorting):
+    def test_sorting_items_by_name(self, driver, sorting):
         """
         Automates the sorting items process on the Sauce Demo website using Selenium
         WebDriver.
@@ -29,7 +30,7 @@ class TestSortingItems:
             "Price (high to low)",
         ],
     )
-    def test_sorting_items_by_price(self, driver, login_before_tests, sorting):
+    def test_sorting_items_by_price(self, driver, sorting):
         """
         Automates the sorting items process on the Sauce Demo website using Selenium
         WebDriver.

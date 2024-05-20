@@ -1,3 +1,4 @@
+import pytest
 from pages.checkout_page import CheckoutPage
 from pages.main_page import MainPage
 from pages.overview_page import OverviewPage
@@ -8,8 +9,10 @@ from pages.thank_you_page import ThankYouPage
 from test_data.test_config import ITEM_NAME, FIRST_NAME, LAST_NAME, ZIP_CODE
 
 
+@pytest.mark.usefixtures("login_before_tests")
+@pytest.mark.purchase_process
 class TestPurchaseProcess:
-    def test_verify_overview_information(self, driver, login_before_tests):
+    def test_verify_overview_information(self, driver):
         """
         Automates the purchase process on the Sauce Demo website using Selenium
         WebDriver.
@@ -29,7 +32,7 @@ class TestPurchaseProcess:
         assert overview_page.is_correct_item_displayed(ITEM_NAME)
         assert overview_page.is_summary_information_available()
 
-    def test_verify_final_price(self, driver, login_before_tests):
+    def test_verify_final_price(self, driver):
         """
         Automates the purchase process on the Sauce Demo website using Selenium
         WebDriver.
@@ -47,7 +50,7 @@ class TestPurchaseProcess:
 
         assert overview_page.is_price_correct(price="9.99")
 
-    def test_full_purchase_process(self, driver, login_before_tests):
+    def test_full_purchase_process(self, driver):
         """
         Automates the purchase process on the Sauce Demo website using Selenium
         WebDriver.

@@ -4,6 +4,7 @@ from pages.main_page import MainPage
 from test_data.test_config import PASSWORD
 
 
+@pytest.mark.login
 class TestLogin:
     @pytest.mark.parametrize(
         "login",
@@ -11,7 +12,6 @@ class TestLogin:
             "standard_user",
             "problem_user",
             "performance_glitch_user",
-            "error_user",
             "error_user",
         ],
     )

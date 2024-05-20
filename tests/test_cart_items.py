@@ -1,11 +1,14 @@
+import pytest
 from pages.main_page import MainPage
 from pages.top_bar_page import TopBarPage
 from pages.cart_page import CartPage
 from test_data.test_config import ITEM_NAME
 
 
+@pytest.mark.usefixtures("login_before_tests")
+@pytest.mark.cart_items
 class TestCartItems:
-    def test_add_item_to_cart(self, driver, login_before_tests):
+    def test_add_item_to_cart(self, driver):
         """
         Automates adding an item to the cart and checks if the item is in the cart.
         """
@@ -22,7 +25,7 @@ class TestCartItems:
         assert top_bar.number_of_items_in_cart() == 1
         assert cart_page.is_item_in_the_cart()
 
-    def test_remove_cart_item_from_main_page(self, driver, login_before_tests):
+    def test_remove_cart_item_from_main_page(self, driver):
         """
         Automates adding an item to the cart and removing it from the main page.
         """
@@ -34,7 +37,7 @@ class TestCartItems:
 
         assert top_bar.number_of_items_in_cart() == 0
 
-    def test_remove_cart_item_from_cart_page(self, driver, login_before_tests):
+    def test_remove_cart_item_from_cart_page(self, driver):
         """
         Automates adding an item to the cart and removing it from the cart page.
         """

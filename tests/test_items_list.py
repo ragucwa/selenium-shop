@@ -1,4 +1,5 @@
 import allure
+import pytest
 from pages.main_page import MainPage
 from utils.util import get_excel_data
 
@@ -9,10 +10,12 @@ from utils.util import get_excel_data
 @allure.parent_suite("SwagLabs")
 @allure.suite("Items list")
 @allure.sub_suite("Main page")
+@pytest.mark.usefixtures("login_before_tests")
+@pytest.mark.items_list
 class TestItemsList:
     @allure.title("Test main page items display")
     @allure.description("Verifies that all items are displayed on the main page.")
-    def test_available_items(self, driver, login_before_tests):
+    def test_available_items(self, driver):
         """
         Verifies that all items are displayed on the main page.
         """
@@ -24,7 +27,7 @@ class TestItemsList:
 
     @allure.title("Test main page items description")
     @allure.description("Verifies that all items have a description.")
-    def test_available_items_descriptions(self, driver, login_before_tests):
+    def test_available_items_descriptions(self, driver):
         """
         Verifies that all items have a description.
         """
