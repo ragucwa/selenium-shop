@@ -8,8 +8,8 @@ pipeline{
         }
         stage('Push docker image to docker hub'){
             steps{
-                withCredentials([usernameColonPassword(credentialsId: 'docker_hub', variable: 'DOCKER_HUB')]) {
-                    bat 'echo %DOCKER_HUB% | docker login --username %DOCKER_HUB% --password-stdin'
+                withCredentials([usernamePassword(credentialsId: 'docker_hub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    bat 'echo %DOCKER_PASSWORD% | docker login --username %DOCKER_USERNAME% --password-stdin'
                     bat 'docker push guttekkk/selenium-training'
                 }
         }
