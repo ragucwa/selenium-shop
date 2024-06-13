@@ -13,6 +13,9 @@ pipeline{
                     bat 'docker push guttekkk/selenium-training'
                 }
         }
+        }
     }
-}
+    always{
+        bat 'docker logout'
+    }
 }
