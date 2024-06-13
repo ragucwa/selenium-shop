@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    environment {
+        automation_password = credentials('automation_password')
+    }
+
+    parameters{
+        string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to build')
+        string(name: 'TEST_FOLDER', defaultValue: './tests/test_items_list.py', description: 'Folder to run tests')
+    }
+
+    stages{
+        stage('Install dependencies') {
+            steps {
+                withEnv(['PIP_CACHE_DIR=.pip_cache']) {
+                    bat "pip install -r requirements.txt"
+                }
+            }
+        }
+
+        stage('Run tests') {
+            steps {
+                bat "pytest ${params.TEST_FOLDER} --junitxml=test_results/test-results.xml --alluredir=./test_results/allure_results"
+            }
+        }
+    }
+    post {
+        always {
+            script{
+                allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'test_results/allure_results']]
+                ])
+            }
+            archiveArtifacts artifacts: '**/test-results.xml, **/test_results/*.png'
+            junit "**/test-results.xml"
+            cleanWs()
+        }
+    }
+}
