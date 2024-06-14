@@ -3,19 +3,19 @@ pipeline{
     stages{
         stage('Build docker image'){
             steps{
-                bat 'docker build -t guttekkk/selenium-training .'
+                script{
+                    app = docker.build('guttekkk/selenium-training')
+                }
             }
         }
         stage('Push docker image to docker hub'){
             steps{
-                withCredentials([usernamePassword(credentialsId: 'docker_hub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
-                    bat 'docker push guttekkk/selenium-training'
+                script{
+                    docker.withRegistry('', 'docker_hub') {
+                        app.push("latest")
+                    }
                 }
+            }
         }
-        }
-    }
-    always{
-        bat 'docker logout'
     }
 }
