@@ -7,3 +7,4 @@ openpyxl
 allure-pytest
 pytest-xdist
 requests
+pytest-html
