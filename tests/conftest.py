@@ -49,7 +49,7 @@ def driver(request, wait_for_grid):
         driver_option.add_argument("-private")
         driver_option.add_argument("-headless")
         driver = webdriver.Remote(
-            command_executor="http://{GRID_ADDRESS}:4444/wd/hub",
+            command_executor=f"http://{GRID_ADDRESS}:4444/wd/hub",
             options=driver_option,
         )
     else:
