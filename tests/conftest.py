@@ -16,25 +16,25 @@ def pytest_addoption(parser):
 @pytest.fixture
 def driver(request, wait_for_grid):
     browser = request.config.getoption("--browser")
+    # if browser == "chrome":
+    #     driver_option = webdriver.ChromeOptions()
+    #     driver_option.add_argument("--window-size=1920,1080")
+    #     driver_option.add_argument("incognito")
+    #     driver_option.add_argument("--headless")
+    #     driver_option.add_argument("--disable-extensions")
+    #     driver_option.add_argument("--no-sandbox")
+    #     driver_option.add_argument("--disable-dev-shm-usage")
+    #     driver_option.experimental_options["prefs"] = {
+    #         "default_content_settings": {"images": 2}
+    #     }
+    #     driver = webdriver.Chrome(options=driver_option)
+    # elif browser == "firefox":
+    #     driver_option = webdriver.FirefoxOptions()
+    #     driver_option.add_argument("--width=1920,height=1080")
+    #     driver_option.add_argument("-private")
+    #     driver_option.add_argument("-headless")
+    #     driver = webdriver.Firefox(options=driver_option)
     if browser == "chrome":
-        driver_option = webdriver.ChromeOptions()
-        driver_option.add_argument("--window-size=1920,1080")
-        driver_option.add_argument("incognito")
-        driver_option.add_argument("--headless")
-        driver_option.add_argument("--disable-extensions")
-        driver_option.add_argument("--no-sandbox")
-        driver_option.add_argument("--disable-dev-shm-usage")
-        driver_option.experimental_options["prefs"] = {
-            "default_content_settings": {"images": 2}
-        }
-        driver = webdriver.Chrome(options=driver_option)
-    elif browser == "firefox":
-        driver_option = webdriver.FirefoxOptions()
-        driver_option.add_argument("--width=1920,height=1080")
-        driver_option.add_argument("-private")
-        driver_option.add_argument("-headless")
-        driver = webdriver.Firefox(options=driver_option)
-    elif browser == "chrome_grid":
         driver_option = webdriver.ChromeOptions()
         driver_option.add_argument("--window-size=1920,1080")
         driver_option.add_argument("incognito")
@@ -43,7 +43,7 @@ def driver(request, wait_for_grid):
             command_executor=f"http://{GRID_ADDRESS}:4444/wd/hub",
             options=driver_option,
         )
-    elif browser == "firefox_grid":
+    elif browser == "firefox":
         driver_option = webdriver.FirefoxOptions()
         driver_option.add_argument("--width=1920,height=1080")
         driver_option.add_argument("-private")
