@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 80
 
 # Run pytest when the container launches
-CMD pytest -v ./tests --browser=chrome_grid --html=test_results/report.html --junitxml=test_results/junit.xml -n 4 -m $TEST_GROUP
+CMD pytest -v ./tests --browser=$BROWSER --html=test_results/report.html --junitxml=test_results/junit.xml -n 4 -m $TEST_GROUP
