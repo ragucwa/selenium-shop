@@ -24,7 +24,7 @@ class TestLogin:
         main_page = MainPage(driver)
 
         login_page.open_login_page()
-        login_page.log_in(login, "dwqedq")
+        login_page.log_in(login, PASSWORD)
 
         assert main_page.is_main_page_displayed()
 
