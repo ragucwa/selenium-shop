@@ -4,7 +4,6 @@ flake8
 black
 pandas
 openpyxl
-allure-pytest
 pytest-xdist
 requests
 pytest-html
